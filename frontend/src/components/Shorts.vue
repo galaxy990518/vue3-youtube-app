@@ -17,7 +17,12 @@
     <span id="title" class="ml-2 text-lg font-semibold">Shorts</span>
   </div>
 
-  <div class="flex flex-wrap rounded-lg">
+  <div v-if="shortsData.length === 0" class="flex justify-center items-center h-full">
+    <div
+      class="w-12 h-12 border-4 border-t-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"
+    ></div>
+  </div>
+  <div v-else class="flex flex-wrap rounded-lg">
     <div
       v-for="item in formattedData"
       :key="item.id"
@@ -34,80 +39,24 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import fetcher from '@/config/axiosConfig.js';
+import { formatViews } from '@/libs/common';
 
-const shortsData = ref([
-  {
-    id: 1,
-    title:
-      'Analog Clock #shortvideo #coding #htmlcss #shortsfeed #shorts #ytshorts #ytviral #webdesign',
-    views: 2177,
-    src: 'https://i.imgur.com/At7NJ0L.png',
-    url: 'https://www.youtube.com/shorts/CWYbqaTHWoE'
-  },
-  {
-    id: 2,
-    title:
-      'Background animation #shortvideo #coding #css3animation #shorts #ytshorts #ytviral #shortsfeed #css',
-    views: 1234,
-    src: 'https://i.imgur.com/YkK3pGL.png',
-    url: 'https://www.youtube.com/shorts/ePOgR_GCSVs'
-  },
-  {
-    id: 3,
-    title: 'programer see this #shortvideo #shortsfeed #shorts',
-    views: 3456,
-    src: 'https://i.imgur.com/TmMyBjO.png',
-    url: 'https://www.youtube.com/shorts/98sTqPcRfWc'
-  },
-  {
-    id: 4,
-    title:
-      'animation border #shortvideo #shortsfeed #viral #shorts #ytshorts $ #webdevlist content #shortvideo #cssanimation #coding ##webdesign #viral #html #shorts #ytshorts_',
-    views: 5678,
-    src: 'https://i.imgur.com/e4EVQVV.png',
-    url: 'https://www.youtube.com/shorts/6_z6WjoWSSc'
-  },
-  {
-    id: 5,
-    title:
-      'CSS style #shorts #ytshort #shortvideo #viral #css3animation #webdesign #webdesign#webdevelopment #viral #programming #shorts',
-    views: 7890,
-    src: 'https://i.imgur.com/xuJa4Ex.png',
-    url: 'https://www.youtube.com/shorts/LV60ho7CdA8'
-  },
-  {
-    id: 6,
-    title: 'image hover zoom #shortvideo #coding #shortsfeed #shorts #ytshorts',
-    views: 9101,
-    src: 'https://i.imgur.com/9BKe3Jz.png',
-    url: 'https://www.youtube.com/shorts/2iKjvjzIo7I'
-  },
-  {
-    id: 7,
-    title: 'button hover Animation #shorts #ytshorts #csshovereffect',
-    views: 1805,
-    src: 'https://i.imgur.com/2zJbjtt.png',
-    url: 'https://www.youtube.com/shorts/x05qsqnv6E8'
-  },
-  {
-    id: 8,
-    title: 'secret website #shortvideo #coding #css3animation #webdevelopment #short #ytshorts',
-    views: 15616,
-    src: 'https://i.imgur.com/xSPApHa.png',
-    url: 'https://www.youtube.com/shorts/MUG0OspOZVU'
-  }
-]);
+const shortsData = ref([]);
 
-const formatViews = (number) => {
-  if (number >= 100000000) {
-    return `${(number / 100000000).toFixed(1)}億次`;
-  } else if (number >= 10000) {
-    const formatted = Math.floor((number / 10000) * 10) / 10;
-    return `${formatted}萬次`;
+const fetchShortsData = async () => {
+  try {
+    const response = await fetcher.get('/api/get_shorts_data');
+    shortsData.value = response.data;
+  } catch (error) {
+    console.error('Error fetching short data:', error);
   }
-  return `${number}次`;
 };
+
+onMounted(() => {
+  fetchShortsData();
+});
 
 const formattedData = computed(() => {
   return shortsData.value.map((item) => ({ ...item, views: formatViews(item.views) }));
