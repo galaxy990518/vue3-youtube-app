@@ -13,9 +13,19 @@ const videosData = JSON.parse(
   fs.readFileSync(path.join(__dirname, "videosData.json"), "utf-8")
 );
 
+const shortsData = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "shortsData.json"), "utf-8")
+);
+
 // API rout
 app.get("/api/get_video_data", (req, res) => {
-  res.json(videosData);
+  setTimeout(() => {
+    res.json(videosData);
+  }, 3000); // Simulate API processing time
+});
+
+app.get("/api/get_shorts_data", (req, res) => {
+  res.json(shortsData);
 });
 
 // For all other routes, return the main index.html file
