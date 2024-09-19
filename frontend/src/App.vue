@@ -1,14 +1,21 @@
 <template>
-  <div id="app">
+  <div class="flex flex-col min-h-screen bg-black text-white">
     <Toolbar />
-    <div class="flex">
+
+    <div class="flex flex-1">
       <Sidebar />
-      <div class="content">
+      <main class="flex-1 ml-24 mt-16 p-4">
         <CategoryButtons />
         <Videos />
         <Shorts />
-      </div>
+      </main>
     </div>
+
+    <footer class="bg-black p-4 text-center mt-auto">
+      <p class="text-sm">
+        © {{ new Date().getFullYear() }} Tina 練習刻版 - 這不是YouTube的官方網站
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -19,26 +26,3 @@ import Videos from './components/Videos.vue';
 import Shorts from './components/Shorts.vue';
 import CategoryButtons from './components/CategoryButtons.vue';
 </script>
-
-<style>
-body {
-  margin: 0;
-  font-family: Roboto, Arial, sans-serif;
-  background-color: #000000;
-  color: #ffffff;
-}
-
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.content {
-  flex: 1;
-  margin-left: 100px;
-  margin-top: 100px;
-  padding-top: 12px;
-  justify-content: flex-start;
-}
-</style>
