@@ -33,7 +33,7 @@
             class="h-4"
           />
           <span class="font-bold text-sm">VouTube</span>
-          <span class="text-[10px] mb-4 text-gray-400">TW</span>
+          <span class="text-[10px] mb-4 text-gray-400">Practice</span>
         </div>
       </div>
 
