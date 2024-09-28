@@ -24,7 +24,7 @@ As a newcomer to web development, the main goals of this project are:
 
 ### Demo link
 
-https://vue3-node-vercel.vercel.app
+https://vue3-yt-video-website.vercel.app/
 
 ## Project Setup
 
